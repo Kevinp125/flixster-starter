@@ -1,3 +1,6 @@
+#DONT PUSH KEYS TO MAIN
+.env 
+
 # Logs
 logs
 *.log
