@@ -1,0 +1,22 @@
+/*ALL CSS IN THIS FILE IS FOR MOVIECARD COMPONENT*/
+
+.movie-image {
+  width: 100%;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.movie-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-style: dashed;
+  border-width: 3px;
+  border-color: black;
+  border-radius: 25px;
+  background-color: var(--retro-brown);
+  color: white;
+  gap: 10px;
+}
+
