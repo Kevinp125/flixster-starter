@@ -14,10 +14,13 @@ const App = () => {
   const [movieList, setMovieList] = useState([]); //decalre a movieList as an empty array. We will populate it with a fetch request to imdb API
   const [pageNum, setPageNum] = useState(1); //pageNum will keep track of the movies we are rendering. Whenever we click the load more button the page increases and we request next page of movies
 
+
+  //function just updates the state of the pageNum everytime user clicks load more button.
   function handleLoadMoreClick(){
     setPageNum((pageNum) => pageNum + 1);
   }
 
+  //function makes fetch request to movie API depending on what page we need to load. If we are loading more pages past 1 we append what fetch request retrusn to our existing array
   async function getMovieList(pageIdx){
     
     const urlWithPage = `${baseUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
@@ -65,7 +68,7 @@ const App = () => {
         <MovieList movieList = {movieList}/>
       </section>
 
-      <button onClick = {handleLoadMoreClick}>Load More... Count: {pageNum}</button>
+      <button className = "load-more-btn" onClick = {handleLoadMoreClick}>Load More...</button>
 
       <Footer />
   
