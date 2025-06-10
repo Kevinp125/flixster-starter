@@ -6,7 +6,7 @@ export default function MovieList(){
 
   return(
 
-    //Map through the data array and for each movie data create a movie card and pass the info as a prop
+    //Map through the data array and for each movie data create a movie card and pass the data as prop
     data.results.map((movieData, index) => {
       return(
         <MovieCard key = {index} movie = {movieData}/>
