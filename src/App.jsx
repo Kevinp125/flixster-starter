@@ -34,16 +34,24 @@ const App = () => {
       if(!res.ok){
         throw new Error('Bad api request');
       }
+
       const movieList = await res.json();
+      const newMovies = movieList.results; //gives us the actual movie array
+
+      setMovieList( (prevList) => [...prevList, ...newMovies]); //spread operator ... allows us to join contents of two different arrays together. I.E a = [1,2,3] b = [4,5] c = [...a,...b] c = [1,2,3,4,5]
+
       console.log(movieList);
+    
+      
     } catch (err) {
       
       console.log("Error fetching the movies");
       console.log(err);
+
     }
   }
 
-  useEffect(() => {
+  useEffect(() => { //useEffect is observing the pageNum state. When it changes it means the user clicked the load more button so we need to call getMovieList again with the updated page num.
     getMovieList(pageNum);
   }, [pageNum])
 
@@ -54,7 +62,7 @@ const App = () => {
       <Header />
 
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
-        <MovieList />
+        <MovieList movieList = {movieList}/>
       </section>
 
       <button onClick = {handleLoadMoreClick}>Load More... Count: {pageNum}</button>
