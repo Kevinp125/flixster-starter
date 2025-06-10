@@ -2,9 +2,9 @@
 
 ## Unit Assignment: Flixster
 
-Submitted by: **NAME**
+Submitted by: **Kevin Pereda**
 
-Estimated time spent: **#** hours spent in total
+Estimated time spent: **2** hours spent in total
 
 Deployed Application (**required**): [Flixster Deployed Site](ADD_LINK_HERE)
 
