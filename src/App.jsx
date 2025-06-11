@@ -116,11 +116,31 @@ const App = () => {
   }, [pageNum, searchTerm])
 
 
+  //this function will be passed down to SortDropdown component so that in that component we can determine which sort user clicks and call this function and sent result back up to parent in the form of "sortType". All sorting logic and updating of movieList happens here so we dont have to pass all that down
+  function handleSort(sortType){
+
+    if(sortType === 'default'){
+      console.log('default')
+    }
+
+    else if(sortType === 'title'){
+      console.log('title sort')
+    }
+
+    else if(sortType === 'release-date'){
+      console.log('release sort')
+    }
+
+    else{
+      console.log('vote avg sort')
+    }
+
+  }
 
   return (
     <div className="App">
       
-      <Header handleSearch = {handleSearch} handleClear={handleClear}/>
+      <Header handleSearch = {handleSearch} handleClear={handleClear} handleSort = {handleSort}/>
 
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
         <MovieList movieList = {movieList}/>
