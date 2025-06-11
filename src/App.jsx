@@ -58,28 +58,55 @@ const App = () => {
   }
 
   useEffect(() => { //useEffect is observing the pageNum state. When it changes it means the user clicked the load more button so we need to call getMovieList again with the updated page num.
-    if (isSearching) {
+    if (isSearching && searchTerm) {
       getSearchResults(searchTerm, pageNum);
     } else {
       getMovieList(pageNum);
     }
-  }, [pageNum])
+  }, [pageNum, searchTerm])
 
 
-  //function just fires off when user submits a search. It turns our flag on so useEffect 
-  function handleSearch(searchInput, pageIdx){
+  //function just fires off when user submits a search. It turns our flag on, emptys MovieList (causing re-render), and setsPageNum to once again triggering our useEffect. In useEffect since search flag is on itll call the getSearchResults function instead of the getallmovies  
+  function handleSearch(searchInput){
+    
     setIsSearching(true);
     setMovieList([]);
-    setSearchTerm((prevSearchTerm) => searchTerm = searchInput); //set search term state so that when user wants to load more search results the query persists across renders
-    setPageNum(1); //lastly set the Pagenum to 1 to trigger the useEffect
+    setSearchTerm(searchInput); //set search term state so that when user wants to load more search results the query persists across renders
+    setPageNum(1); //lastly set the Pagenum to 1 to trigger the useEffect ***when pageNum in now playing is > 1*** If user never paginated this wont trigger a use effect. What will trigger it is the change of the searchTerm
   }
 
+  //function actually calls api and that returns an array of movies that match the searchTerm
   async function getSearchResults(searchTerm, pageIdx){
 
+    console.log("in get search results");
     const urlWithQuery = `${baseSearchUrl}?query=${searchTerm}&include_adult=false&language=en-US&page=${pageIdx}`;
 
+    try{
+
+      const res = await fetch(urlWithQuery, {
+        headers:{
+          accept: 'application/json',
+          Authorization: `bearer ${import.meta.env.VITE_API_KEY}`,
+    
+        },
+      });
+      if(!res.ok){
+        throw new Error('Bad api request');
+      }
+      
+      const moviesFound = await res.json();
+      const searchResults = moviesFound.results; //gives us the actual movie array
+
+      setMovieList( (prevSearchResults) => [...prevSearchResults, ...searchResults]); //by setting MovieList to be the concatentation of the prev list and the new results we keep tacking to search results if usre clicks load more.
+
+    } catch(err){
+
+      console.log("No search results");
+      console.log(err);
+    }
 
   }
+
 
   return (
     <div className="App">

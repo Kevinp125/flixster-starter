@@ -12,21 +12,22 @@ export default function SearchBar({handleSearch}){
   }
   
   //when user hits enter key or clicks the submit button this function will fire which executes the search
-  const handleSubmit = (event) => {
+  const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      console.log(searchInput);
       handleSearch(searchInput);
     }
-    else{
-      console.log(searchInput);
-    }
+  }
+
+  //handle the submitBtnClick by calling the same handle Search function and passing it same input
+  const handleSubmitClick = () => {
+    handleSearch(searchInput);
   }
 
   return(
 
     <div>
-      <input type="text" value = {searchInput} onChange = {handleInputChange} onKeyDown = {handleSubmit} placeholder="Search..."/>
-      <button onClick = {handleSubmit}>Submit</button>
+      <input type="text" value = {searchInput} onChange = {handleInputChange} onKeyDown = {handleKeyDown} placeholder="Search..."/>
+      <button onClick = {handleSubmitClick}>Submit</button>
       <button>Clear</button>
     </div>
 
