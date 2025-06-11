@@ -7,12 +7,15 @@ import MovieList from './components/MovieList'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
-const  baseUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US'; //url that we are sending fetch request to without page at end
+const baseDetailsUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US'; //url that we are sending fetch request to that returns array with movies now playing and details without page at end
+const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is the request that returns movie results depending on a query parameter which we are getting from our SearchBar component
 
 const App = () => {
 
   const [movieList, setMovieList] = useState([]); //decalre a movieList as an empty array. We will populate it with a fetch request to imdb API
   const [pageNum, setPageNum] = useState(1); //pageNum will keep track of the movies we are rendering. Whenever we click the load more button the page increases and we request next page of movies
+  const [isSearching, setIsSearching] = useState(false) //flag to know whether or not we are searching to call correct function in useEffect
+  const [searchTerm, setSearchTerm] = useState(''); //need this so that searching pagination also works
 
 
   //function just updates the state of the pageNum everytime user clicks load more button.
@@ -23,7 +26,7 @@ const App = () => {
   //function makes fetch request to movie API depending on what page we need to load. If we are loading more pages past 1 we append what fetch request retrusn to our existing array
   async function getMovieList(pageIdx){
     
-    const urlWithPage = `${baseUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
+    const urlWithPage = `${baseDetailsUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
     
 
     try{
@@ -55,14 +58,33 @@ const App = () => {
   }
 
   useEffect(() => { //useEffect is observing the pageNum state. When it changes it means the user clicked the load more button so we need to call getMovieList again with the updated page num.
-    getMovieList(pageNum);
+    if (isSearching) {
+      getSearchResults(searchTerm, pageNum);
+    } else {
+      getMovieList(pageNum);
+    }
   }, [pageNum])
 
+
+  //function just fires off when user submits a search. It turns our flag on so useEffect 
+  function handleSearch(searchInput, pageIdx){
+    setIsSearching(true);
+    setMovieList([]);
+    setSearchTerm((prevSearchTerm) => searchTerm = searchInput); //set search term state so that when user wants to load more search results the query persists across renders
+    setPageNum(1); //lastly set the Pagenum to 1 to trigger the useEffect
+  }
+
+  async function getSearchResults(searchTerm, pageIdx){
+
+    const urlWithQuery = `${baseSearchUrl}?query=${searchTerm}&include_adult=false&language=en-US&page=${pageIdx}`;
+
+
+  }
 
   return (
     <div className="App">
       
-      <Header />
+      <Header handleSearch = {handleSearch}/>
 
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
         <MovieList movieList = {movieList}/>

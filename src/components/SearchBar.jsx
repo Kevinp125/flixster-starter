@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 
-export default function SearchBar(){
+export default function SearchBar({handleSearch}){
 
   const [searchInput, setSearchInput] = useState(''); //initialzing state for our input
 
@@ -15,6 +15,7 @@ export default function SearchBar(){
   const handleSubmit = (event) => {
     if (event.key === 'Enter') {
       console.log(searchInput);
+      handleSearch(searchInput);
     }
     else{
       console.log(searchInput);
