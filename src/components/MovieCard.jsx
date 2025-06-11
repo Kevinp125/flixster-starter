@@ -15,7 +15,7 @@ export default function MovieCard({movie}){
         <img className = "movie-image" src={fullImagePath} alt="Stock movie photo"/>
 
           <h2>{title}</h2>
-          <p>{vote_average}</p>
+          <p>⭐️ {vote_average}</p>
 
       </article>
     </>

@@ -4,7 +4,7 @@
 
 Submitted by: **Kevin Pereda**
 
-Estimated time spent: **7:00** hours spent in total
+Estimated time spent: **8:30** hours spent in total
 
 Deployed Application (**required**): [Flixster Deployed Site](https://flixster-starter-n82r.onrender.com/)
 

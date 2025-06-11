@@ -45,10 +45,7 @@ const App = () => {
       const newMovies = movieList.results; //gives us the actual movie array
 
       setMovieList( (prevList) => [...prevList, ...newMovies]); //spread operator ... allows us to join contents of two different arrays together. I.E a = [1,2,3] b = [4,5] c = [...a,...b] c = [1,2,3,4,5]
-
-      console.log(movieList);
-    
-      
+          
     } catch (err) {
       
       console.log("Error fetching the movies");
@@ -107,10 +104,8 @@ const App = () => {
 
   useEffect(() => { //useEffect is observing the pageNum and searchTerm state. When load more is clicked and page num changes OR we get a new searchTerm itll execute
     if (isSearching && searchTerm) {
-      console.log("in search use effect")
       getSearchResults(searchTerm, pageNum);
     } else {
-      console.log("post clear?")
       getMovieList(pageNum);
     }
   }, [pageNum, searchTerm])
@@ -119,23 +114,65 @@ const App = () => {
   //this function will be passed down to SortDropdown component so that in that component we can determine which sort user clicks and call this function and sent result back up to parent in the form of "sortType". All sorting logic and updating of movieList happens here so we dont have to pass all that down
   function handleSort(sortType){
 
+    //if user clicks back to default option (unsorted) make sure to clear array of sorted one first and then populate now playing
     if(sortType === 'default'){
-      console.log('default')
+      setMovieList([]);
+      getMovieList(pageNum);
     }
 
     else if(sortType === 'title'){
-      console.log('title sort')
+      sortByTitle();
     }
 
     else if(sortType === 'release-date'){
-      console.log('release sort')
+      sortByReleaseDate();
     }
 
     else{
-      console.log('vote avg sort')
+      sortByAvgRating();
     }
 
   }
+
+  //sorts movies by title alphabetical order
+  function sortByTitle(){
+
+    const sortedByTitle = [...movieList];
+    sortedByTitle.sort((a,b) => { //so JS sort for whatever reason doesn't return a new array but rather a reference to the same newly modified array. Thats why in order to trigger re-render in above line we need to copy movieList into new array and sort that one so react notices the array "changed" rather than just sorting movieList in place
+      if(a.title > b.title) return 1;
+      else if(a.original_title < b.original_title) return -1;
+      else return 0;
+    })
+
+    setMovieList(sortedByTitle);
+
+  }
+
+  //sorts movies by Release date
+  function sortByReleaseDate(){
+
+    const sortedByReleaseDate = [...movieList];
+    sortedByReleaseDate.sort((a,b) => {
+      if(a.release_date > b.release_date) return -1;
+      else if(a.release_date < b.release_date) return 1;
+      else return 0;
+    })
+
+    setMovieList(sortedByReleaseDate);
+  }
+
+  //Sort by the AvgRating
+  function sortByAvgRating(){
+
+    const sortedByRating = [...movieList];
+    sortedByRating.sort( (a,b) => {
+      return b.vote_average - a.vote_average;
+    })
+
+    setMovieList(sortedByRating);
+    
+  }
+
 
   return (
     <div className="App">
