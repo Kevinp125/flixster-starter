@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 
-export default function SearchBar({handleSearch}){
+export default function SearchBar({handleSearch, handleClear}){
 
   const [searchInput, setSearchInput] = useState(''); //initialzing state for our input
 
@@ -23,12 +23,17 @@ export default function SearchBar({handleSearch}){
     handleSearch(searchInput);
   }
 
+  const handleClearClick = () => {
+    setSearchInput(''); //just make this blank so visually it clears for user
+    handleClear('');//call handleClear function which executes in App.jsx where all the MovieList data is
+  }
+
   return(
 
     <div>
       <input type="text" value = {searchInput} onChange = {handleInputChange} onKeyDown = {handleKeyDown} placeholder="Search..."/>
       <button onClick = {handleSubmitClick}>Submit</button>
-      <button>Clear</button>
+      <button onClick = {handleClearClick}>Clear</button>
     </div>
 
   )

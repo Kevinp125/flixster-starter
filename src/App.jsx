@@ -59,8 +59,10 @@ const App = () => {
 
   useEffect(() => { //useEffect is observing the pageNum state. When it changes it means the user clicked the load more button so we need to call getMovieList again with the updated page num.
     if (isSearching && searchTerm) {
+      console.log("in search use effect")
       getSearchResults(searchTerm, pageNum);
     } else {
+      console.log("post clear?")
       getMovieList(pageNum);
     }
   }, [pageNum, searchTerm])
@@ -107,11 +109,18 @@ const App = () => {
 
   }
 
+  //function will fire when user hits the clear button
+  function handleClear(clearInput){
+    setIsSearching(false); //just change isSearching flag to false to when useEffect goes off we just re-render page with now playing movies
+    setMovieList([]); //remember to make MovieList empty again if not you are just goign to append the now playing movies to the end of previous search results
+    setSearchTerm(clearInput); //make search term an empty string to trigger useEffect
+    setPageNum(1); //make sure page is reset for pagination.
+  }
 
   return (
     <div className="App">
       
-      <Header handleSearch = {handleSearch}/>
+      <Header handleSearch = {handleSearch} handleClear={handleClear}/>
 
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
         <MovieList movieList = {movieList}/>
