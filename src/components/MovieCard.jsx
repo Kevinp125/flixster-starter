@@ -13,11 +13,9 @@ export default function MovieCard({movie}){
     <>
       <article className = "movie-card">
         <img className = "movie-image" src={fullImagePath} alt="Stock movie photo"/>
-        
+
           <h2>{title}</h2>
           <p>{vote_average}</p>
-
-
 
       </article>
     </>

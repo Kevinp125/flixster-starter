@@ -27,7 +27,7 @@ const App = () => {
   async function getMovieList(pageIdx){
     
     const urlWithPage = `${baseDetailsUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
-    
+  
 
     try{
       const res = await fetch(urlWithPage, {
@@ -57,18 +57,7 @@ const App = () => {
     }
   }
 
-  useEffect(() => { //useEffect is observing the pageNum state. When it changes it means the user clicked the load more button so we need to call getMovieList again with the updated page num.
-    if (isSearching && searchTerm) {
-      console.log("in search use effect")
-      getSearchResults(searchTerm, pageNum);
-    } else {
-      console.log("post clear?")
-      getMovieList(pageNum);
-    }
-  }, [pageNum, searchTerm])
-
-
-  //function just fires off when user submits a search. It turns our flag on, emptys MovieList (causing re-render), and setsPageNum to once again triggering our useEffect. In useEffect since search flag is on itll call the getSearchResults function instead of the getallmovies  
+  //function just fires off when user submits a search. It turns our flag on, emptys MovieList (causing re-render), and setsPageNum to one triggering our useEffect. In useEffect since search flag is on itll call the getSearchResults function instead of the getallmovies  
   function handleSearch(searchInput){
     
     setIsSearching(true);
@@ -89,7 +78,6 @@ const App = () => {
         headers:{
           accept: 'application/json',
           Authorization: `bearer ${import.meta.env.VITE_API_KEY}`,
-    
         },
       });
       if(!res.ok){
@@ -97,7 +85,7 @@ const App = () => {
       }
       
       const moviesFound = await res.json();
-      const searchResults = moviesFound.results; //gives us the actual movie array
+      const searchResults = moviesFound.results; //gives us the actual movieFound array
 
       setMovieList( (prevSearchResults) => [...prevSearchResults, ...searchResults]); //by setting MovieList to be the concatentation of the prev list and the new results we keep tacking to search results if usre clicks load more.
 
@@ -117,6 +105,18 @@ const App = () => {
     setPageNum(1); //make sure page is reset for pagination.
   }
 
+  useEffect(() => { //useEffect is observing the pageNum and searchTerm state. When load more is clicked and page num changes OR we get a new searchTerm itll execute
+    if (isSearching && searchTerm) {
+      console.log("in search use effect")
+      getSearchResults(searchTerm, pageNum);
+    } else {
+      console.log("post clear?")
+      getMovieList(pageNum);
+    }
+  }, [pageNum, searchTerm])
+
+
+
   return (
     <div className="App">
       
@@ -132,6 +132,7 @@ const App = () => {
   
     </div>
   )
+  
 }
 
 export default App
