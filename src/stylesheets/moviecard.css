@@ -1,0 +1,31 @@
+/*ALL CSS IN THIS FILE IS FOR MOVIECARD COMPONENT*/
+
+.movie-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.movie-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-style: dashed;
+  border-width: 6px;
+  border-color: black;
+  border-radius: 25px;
+  background-color: var(--retro-brown);
+  color: white;
+  gap: 10px;
+  transition: transform 0.3s ease; /* allows the hover scaling to not be sudden */
+}
+
+.movie-card:hover {
+    transform: scale(1.03); /* Grow the card a little bit so you can notice effect% */
+    box-shadow: 0 8px 20px rgba(255, 253, 253, 0.609); /* Add shadow for depth */
+    cursor: pointer; /*Change cursor symbol so user nows they can click*/
+}
+
