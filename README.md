@@ -123,7 +123,8 @@ Add your response here
 
 ### Open-source libraries used
 
-- Add any links to open-source libraries used in your project.
+- Not really a library but used this guide who said it was ok to copy and paste for the components that make up the embedded YouTube trailer.
+  https://dev.to/bravemaster619/simplest-way-to-embed-a-youtube-video-in-your-react-app-3bk2
 
 ### Shout out
 
