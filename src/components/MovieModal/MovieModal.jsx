@@ -1,5 +1,6 @@
 import React from "react";
 import './modalstyles.css'
+import { getMovieVideos } from "../../utils";
 
 const baseURL = 'https://image.tmdb.org/t/p'; // 
 const posterSize = '/w500'
@@ -18,6 +19,8 @@ export default function MovieModal({movieDetails, handleCardClose}){
     return genreString; //return the genreString
   }
 
+  getMovieVideos(movieDetails).then( (movieTrailer) => {console.log(movieTrailer)}) ;
+
   return(
   
     <div id = "modal" className="modal-overlay">
@@ -33,6 +36,8 @@ export default function MovieModal({movieDetails, handleCardClose}){
           <p>Overview: {movieDetails.overview}</p>
           <p>Genres: {buildGenreString()}</p>
           <p>Runtime: {movieDetails.runtime} minutes</p>
+
+
           
 
         </div>

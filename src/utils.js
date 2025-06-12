@@ -2,6 +2,7 @@
 const baseNowPlayingUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US'; //url that we are sending fetch request to that returns array with movies now playing and details without page at end
 const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is the request that returns movie results depending on a query parameter which we are getting from our SearchBar component
 const baseDetailsUrl = 'https://api.themoviedb.org/3/movie/';
+const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
 
 //function makes fetch request to movie API depending on what page we need to load. If we are loading more pages past 1 we append what fetch request retrusn to our existing array
   export async function getMovieList(pageIdx){
@@ -89,5 +90,43 @@ const baseDetailsUrl = 'https://api.themoviedb.org/3/movie/';
       console.error('fetch request that gives us more detailed movie information failed');
       console.error(err);
     }
+
+  }
+
+  //function does a fetch request which returns all the videos pertaining to a certain movie
+  export async function getMovieVideos(movie){
+
+    const videosUrlWithMovieID = `${baseMovieVideosUrl}${movie.id}/videos?language=en-US`
+
+    try{  
+
+      const res = await fetch(videosUrlWithMovieID, {
+        headers:{
+          accept: 'application/json',
+          Authorization: `bearer ${import.meta.env.VITE_API_KEY}`,          
+        }
+      });
+
+      if(!res.ok){
+        throw new Error('Bad api request');
+      }
+
+      let movieVideos = await res.json();
+      movieVideos = movieVideos.results;
+      let movieTrailer = getMovieTrailer(movieVideos); //pass the resulting array of video objects into getMovieTrailer which finds the video of type "trailer" and returns it
+      return movieTrailer;
+
+      return 
+    } catch(err){
+      console.error('fetch request that gives us all movie trailers failed');
+      console.error(err);
+    }
+
+  }
+
+  //function uses find method to return first instance of video who has type Trailer
+  function getMovieTrailer(movieVideoList){
+
+    return movieVideoList.find((video) => video.type === 'Trailer');
 
   }
