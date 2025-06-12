@@ -1,5 +1,5 @@
 import React from "react";
-import '../stylesheets/moviecard.css'
+import './moviecard.css'
 
 const baseURL = 'https://image.tmdb.org/t/p'; // 
 const posterSize = '/w500'

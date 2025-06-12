@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useRef } from 'react'
 import './App.css'
-import './stylesheets/movielist.css'
+import './components/MovieList/movielist.css'
 import {getMovieList, getSearchResults} from './utils.js'
 
 import MovieList from './components/MovieList/MovieList.jsx'

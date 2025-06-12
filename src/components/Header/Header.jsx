@@ -1,5 +1,5 @@
 import React from "react";
-import '../stylesheets/header-footer.css'
+import './header-footer.css'
 import SearchBar from "../SearchBar/SearchBar";
 import SortDropdown from "../SortDropdown/SortDropdown";
 
