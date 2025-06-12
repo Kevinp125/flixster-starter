@@ -12,52 +12,51 @@ import Footer from './components/Footer'
 const App = () => {
 
   const [movieList, setMovieList] = useState([]); //decalre a movieList as an empty array. We will populate it with a fetch request to imdb API
-  const pageNum = useRef(1);  //useRef here for pageNum is better since pageNum doesn't affect our dom and will get updated immidiately with useRef instead of state.
-  const [isSearching, setIsSearching] = useState(false) //flag to know whether or not we are searching to call correct function in useEffect
   const [searchTerm, setSearchTerm] = useState(''); //need this so that searching pagination also works
+  const pageNum = useRef(1);  //useRef here for pageNum is better since pageNum doesn't affect our dom and will get updated immidiately with useRef instead of state.
+  const isSearching = useRef(false); //use a ref for the isSearching flag so it persists across renders and updates instantly
 
 
-  //function just updates the state of the pageNum everytime user clicks load more button.
+  //function updates the pageNum and calls the funtions that returns the appropriate movie page and appends it to array. If we are in search mode we call get Search results.
   function handleLoadMoreClick(){
+
     pageNum.current++;
-    console.log(pageNum.current)
-    //call getMovieList
+
+    if(isSearching.current){
+      getSearchResults(searchTerm, pageNum.current).then(newResults => setMovieList((prevSearchResults => [...prevSearchResults, ...newResults])));
+    }
+    else{
+      getMovieList(pageNum.current).then(newMovieList => setMovieList(prevMovieList => [...prevMovieList, ...newMovieList])); 
+    }
   }
 
   //function just fires off when user submits a search. It turns our flag on, emptys MovieList (causing re-render), and setsPageNum to one triggering our useEffect. In useEffect since search flag is on itll call the getSearchResults function instead of the getallmovies  
   function handleSearch(searchInput){
     //call getSearchResults here not in the useEffect
-    setIsSearching(true);
-    setMovieList([]);
-    setSearchTerm(searchInput); //set search term state so that when user wants to load more search results the query persists across renders
-    setPageNum(1); //lastly set the Pagenum to 1 to trigger the useEffect ***when pageNum in now playing is > 1*** If user never paginated this wont trigger a use effect. What will trigger it is the change of the searchTerm
+    isSearching.current = true;
+    setSearchTerm(searchInput);
+    getSearchResults(searchInput, pageNum.current).then(newResults => setMovieList(newResults))
   }
 
 
   //function will fire when user hits the clear button
   function handleClear(clearInput){
-    setIsSearching(false); //just change isSearching flag to false to when useEffect goes off we just re-render page with now playing movies
-    setMovieList([]); //remember to make MovieList empty again if not you are just goign to append the now playing movies to the end of previous search results
+    isSearching.current = false; //just change isSearching flag to false to when useEffect goes off we just re-render page with now playing movies
+    pageNum.current = 1; //make sure page is reset for pagination.
+    getMovieList(pageNum.current).then(newMovieList => setMovieList(newMovieList));
     setSearchTerm(clearInput); //make search term an empty string to trigger useEffect
-    setPageNum(1); //make sure page is reset for pagination.
   }
 
-  useEffect(() => { //useEffect is observing the pageNum and searchTerm state. When load more is clicked and page num changes OR we get a new searchTerm itll execute
-    if (isSearching && searchTerm) {
-      getSearchResults(searchTerm, pageNum);
-    } else {
-      getMovieList(pageNum.current).then(newMovieList => setMovieList(prevMovieList => [...prevMovieList, ...newMovieList])); 
-    }
-  }, [pageNum, searchTerm]) //DONT USE THIS USE EFFECT!!!!
+  useEffect(() => { //useEffect only fires on pageMount and renders first page of now playing movies.
+    getMovieList(pageNum.current).then(newMovieList => setMovieList(newMovieList)); 
+  },[]) 
 
   
   //this function will be passed down to SortDropdown component so that in that component we can determine which sort user clicks and call this function and sent result back up to parent in the form of "sortType". All sorting logic and updating of movieList happens here so we dont have to pass all that down
   function handleSort(sortType){
 
-    //if user clicks back to default option (unsorted) make sure to clear array of sorted one first and then populate now playing
     if(sortType === 'default'){
-      console.log(movieList);
-      getMovieList(pageNum).then(movieList => setMovieList(movieList));
+      getMovieList(pageNum.current).then(prevMovieList => setMovieList(movieList));
 
     }
 

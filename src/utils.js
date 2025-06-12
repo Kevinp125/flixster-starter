@@ -39,6 +39,7 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
 
     console.log("in get search results");
     const urlWithQuery = `${baseSearchUrl}?query=${searchTerm}&include_adult=false&language=en-US&page=${pageIdx}`;
+    console.log(urlWithQuery);
 
     try{
 
@@ -55,7 +56,9 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
       const moviesFound = await res.json();
       const searchResults = moviesFound.results; //gives us the actual movieFound array
 
-      setMovieList( (prevSearchResults) => [...prevSearchResults, ...searchResults]); //by setting MovieList to be the concatentation of the prev list and the new results we keep tacking to search results if usre clicks load more.
+      console.log(searchResults);
+      
+      return searchResults;
 
     } catch(err){
 
