@@ -8,6 +8,7 @@ import {getMovieList, getSearchResults} from './utils.js'
 import MovieList from './components/MovieList/MovieList.jsx'
 import Header from './components/Header/Header.jsx'
 import Footer from './components/Header/Footer/Footer.jsx'
+import MovieModal from './components/MovieModal/MovieModal.jsx'
 
 const App = () => {
 
@@ -15,6 +16,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState(''); //need this so that searching pagination also works
   const pageNum = useRef(1);  //useRef here for pageNum is better since pageNum doesn't affect our dom and will get updated immidiately with useRef instead of state.
   const isSearching = useRef(false); //use a ref for the isSearching flag so it persists across renders and updates instantly
+  const [movieChosen, setMovieChosen] = useState(null); //state will get updated with a specific movie once a card is clicked
 
 
   //function updates the pageNum and calls the funtions that returns the appropriate movie page and appends it to array. If we are in search mode we call get Search results.
@@ -112,11 +114,10 @@ const App = () => {
     
   }
 
-
-  //function that handles cardClick and takes in movie data
-
-
-  //Modal componant with state isOpen
+  //this function will get passed down to the MovieCard component so that onClick it can call it and pass up the right movie data
+  function handleCardClick(movieDetails){
+    setMovieChosen(movieDetails);
+  }
 
   return (
     <div className="App">
@@ -124,13 +125,15 @@ const App = () => {
       <Header handleSearch = {handleSearch} handleClear={handleClear} handleSort = {handleSort}/>
 
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
-        <MovieList movieList = {movieList}/>
+        <MovieList handleCardClick = {handleCardClick} movieList = {movieList}/>
       </section>
 
       <button className = "load-more-btn" onClick = {handleLoadMoreClick}>Load More...</button>
 
       <Footer />
-  
+
+      {movieChosen && <MovieModal movieDetails = {movieChosen}/>} {/*If movie chosen is no longer null (has movieDetails) first piece will be true so itll evalute second part of statement which is rendering movieModal */}
+
     </div>
   )
   
