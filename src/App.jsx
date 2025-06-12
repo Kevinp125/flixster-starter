@@ -28,6 +28,7 @@ const App = () => {
     else{
       getMovieList(pageNum.current).then(newMovieList => setMovieList(prevMovieList => [...prevMovieList, ...newMovieList])); 
     }
+    console.log(movieList);
   }
 
   //function just fires off when user submits a search. It turns our flag on, emptys MovieList (causing re-render), and setsPageNum to one triggering our useEffect. In useEffect since search flag is on itll call the getSearchResults function instead of the getallmovies  

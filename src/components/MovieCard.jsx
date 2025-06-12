@@ -10,15 +10,13 @@ export default function MovieCard({movie}){
   const fullImagePath = baseURL + posterSize + poster_path; //this makes the image path cause data doesnt have full image path just the poster_path (imdb thing)
 
   return(
-    <>
-      <article  className = "movie-card">
-        <img className = "movie-image" src={fullImagePath} alt="Stock movie photo"/>
+  
+    <article  className = "movie-card">
+      <img className = "movie-image" src={fullImagePath} alt={`${title} movie poster`}/>
+        <h2>{title}</h2>
+        <p>⭐️ {vote_average}</p>
+    </article>
 
-          <h2>{title}</h2>
-          <p>⭐️ {vote_average}</p>
-
-      </article>
-    </>
   )
 
 }
