@@ -11,7 +11,7 @@ export default function MovieCard({movie}){
 
   return(
     <>
-      <article className = "movie-card">
+      <article  className = "movie-card">
         <img className = "movie-image" src={fullImagePath} alt="Stock movie photo"/>
 
           <h2>{title}</h2>

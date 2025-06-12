@@ -23,8 +23,7 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
       const movieList = await res.json();
       const newMovies = movieList.results; //gives us the actual movie array
 
-      return newMovies;
-      setMovieList( (prevList) => [...prevList, ...newMovies]); //spread operator ... allows us to join contents of two different arrays together. I.E a = [1,2,3] b = [4,5] c = [...a,...b] c = [1,2,3,4,5]
+      return newMovies; //finally return the list of movies the fetchRequest responded with
           
     } catch (err) {
       

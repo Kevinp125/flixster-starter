@@ -13,6 +13,8 @@ export default function MovieList({movieList}){
           <MovieCard key = {index} movie = {movieData}/>
         )
       })}
+
+      
     </>
 
   )
