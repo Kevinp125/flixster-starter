@@ -21,7 +21,7 @@ const App = () => {
 
   //function updates the pageNum and calls the funtions that returns the appropriate movie page and appends it to array. If we are in search mode we call get Search results.
   function handleLoadMoreClick(){
-
+    
     pageNum.current++;
 
     if(isSearching.current){

@@ -1,11 +1,12 @@
 
-const baseDetailsUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US'; //url that we are sending fetch request to that returns array with movies now playing and details without page at end
+const baseNowPlayingUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US'; //url that we are sending fetch request to that returns array with movies now playing and details without page at end
 const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is the request that returns movie results depending on a query parameter which we are getting from our SearchBar component
+const baseDetailsUrl = 'https://api.themoviedb.org/3/movie/';
 
 //function makes fetch request to movie API depending on what page we need to load. If we are loading more pages past 1 we append what fetch request retrusn to our existing array
   export async function getMovieList(pageIdx){
     
-    const urlWithPage = `${baseDetailsUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
+    const urlWithPage = `${baseNowPlayingUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
   
 
     try{
@@ -59,6 +60,33 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
     } catch(err){
 
       console.error("No search results");
+      console.error(err);
+    }
+
+  }
+
+  export async function getMovieDetails(movie){
+
+    const urlWithMovieID = baseDetailsUrl + movie.id + '?language=en-US';
+
+    try{
+
+      const res = await fetch(urlWithMovieID, {
+        headers:{
+          accept: 'application/json',
+          Authorization: `bearer ${import.meta.env.VITE_API_KEY}`,
+        }
+      });
+
+      if(!res.ok){
+        throw new Error('Bad api request');
+      }
+
+      const movieDetailed = await res.json();
+      return movieDetailed;
+
+    } catch(err){
+      console.error('fetch request that gives us more detailed movie information failed');
       console.error(err);
     }
 

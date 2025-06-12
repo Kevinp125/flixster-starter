@@ -1,5 +1,6 @@
 import React from "react";
 import './moviecard.css'
+import { getMovieDetails } from "../../../utils";
 
 const baseURL = 'https://image.tmdb.org/t/p'; // 
 const posterSize = '/w500'
@@ -11,7 +12,7 @@ export default function MovieCard({movie, handleCardClick}){
 
   return(
   
-    <article  onClick = {() => handleCardClick(movie)} className = "movie-card">
+    <article  onClick = {() => {getMovieDetails(movie).then((movieDetails) => {handleCardClick(movieDetails)})}} className = "movie-card">
       <img className = "movie-image" src={fullImagePath} alt={`${title} movie poster`}/>
         <h2>{title}</h2>
         <p>⭐️ {vote_average}</p>
