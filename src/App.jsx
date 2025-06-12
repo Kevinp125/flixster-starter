@@ -56,8 +56,8 @@ const App = () => {
   function handleSort(sortType){
 
     if(sortType === 'default'){
-      getMovieList(pageNum.current).then(prevMovieList => setMovieList(movieList));
-
+      pageNum.current = 1;
+      getMovieList(pageNum.current).then(movieList => setMovieList(movieList));
     }
 
     else if(sortType === 'title'){
