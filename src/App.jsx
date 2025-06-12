@@ -119,6 +119,10 @@ const App = () => {
     setMovieChosen(movieDetails);
   }
 
+  function handleCardClose(){ //pass this all the way down to our modal so that when close is clicked we set movie data to null so that we trigger a re-render and since its null modal wont display
+    setMovieChosen(null);
+  }
+
   return (
     <div className="App">
       
@@ -132,7 +136,7 @@ const App = () => {
 
       <Footer />
 
-      {movieChosen && <MovieModal movieDetails = {movieChosen}/>} {/*If movie chosen is no longer null (has movieDetails) first piece will be true so itll evalute second part of statement which is rendering movieModal */}
+      {movieChosen && <MovieModal handleCardClose = {handleCardClose} movieDetails = {movieChosen}/>} {/*If movie chosen is no longer null (has movieDetails) first piece will be true so itll evalute second part of statement which is rendering movieModal */}
 
     </div>
   )
