@@ -27,8 +27,8 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
           
     } catch (err) {
       
-      console.log("Error fetching the movies");
-      console.log(err);
+      console.error("Error fetching the movies");
+      console.error(err);
 
     }
   }
@@ -37,9 +37,7 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
   //function actually calls api and that returns an array of movies that match the searchTerm
   export async function getSearchResults(searchTerm, pageIdx){
 
-    console.log("in get search results");
     const urlWithQuery = `${baseSearchUrl}?query=${searchTerm}&include_adult=false&language=en-US&page=${pageIdx}`;
-    console.log(urlWithQuery);
 
     try{
 
@@ -55,15 +53,13 @@ const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is
       
       const moviesFound = await res.json();
       const searchResults = moviesFound.results; //gives us the actual movieFound array
-
-      console.log(searchResults);
       
       return searchResults;
 
     } catch(err){
 
-      console.log("No search results");
-      console.log(err);
+      console.error("No search results");
+      console.error(err);
     }
 
   }

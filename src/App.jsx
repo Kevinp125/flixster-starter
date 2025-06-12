@@ -5,9 +5,9 @@ import './App.css'
 import './stylesheets/movielist.css'
 import {getMovieList, getSearchResults} from './utils.js'
 
-import MovieList from './components/MovieList'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import MovieList from './components/MovieList/MovieList.jsx'
+import Header from './components/Header/Header.jsx'
+import Footer from './components/Header/Footer/Footer.jsx'
 
 const App = () => {
 
@@ -28,7 +28,6 @@ const App = () => {
     else{
       getMovieList(pageNum.current).then(newMovieList => setMovieList(prevMovieList => [...prevMovieList, ...newMovieList])); 
     }
-    console.log(movieList);
   }
 
   //function just fires off when user submits a search. It turns our flag on, emptys MovieList (causing re-render), and setsPageNum to one triggering our useEffect. In useEffect since search flag is on itll call the getSearchResults function instead of the getallmovies  
