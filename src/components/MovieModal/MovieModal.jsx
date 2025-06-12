@@ -12,7 +12,7 @@ const posterSize = '/w500'
 export default function MovieModal({movieDetails, handleCardClose}){
 
   const [embedId, setEmbedId] = useState('');
-  const fullImagePath = baseURL + posterSize + movieDetails.poster_path; //this makes the image path cause data doesnt have full image path just the poster_path (imdb thing)
+  const fullImagePath = baseURL + posterSize + movieDetails.backdrop_path; //this makes the image path cause data doesnt have full image path just the poster_path (imdb thing)
 
   useEffect( () => {
     getMovieVideos(movieDetails).then((movieTrailerKey) => {setEmbedId(movieTrailerKey)});
@@ -42,10 +42,7 @@ export default function MovieModal({movieDetails, handleCardClose}){
           <p>Overview: {movieDetails.overview}</p>
           <p>Genres: {buildGenreString()}</p>
           <p>Runtime: {movieDetails.runtime} minutes</p>
-          <YoutubeEmbed embedId = {embedId}/>
-
-
-          
+          <YoutubeEmbed embedId = {embedId}/>         
 
         </div>
     </div>

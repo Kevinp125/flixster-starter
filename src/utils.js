@@ -115,7 +115,7 @@ const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
       movieVideos = movieVideos.results;
       let movieTrailer = getMovieTrailer(movieVideos); //pass the resulting array of video objects into getMovieTrailer which finds the video of type "trailer" and returns it
       return movieTrailer.key;
-     
+
     } catch(err){
       console.error('fetch request that gives us all movie trailers failed');
       console.error(err);
