@@ -157,8 +157,8 @@ const App = () => {
     <div className="App">
       
       <nav className = "sidebar">
-        <p onClick = {() => setMovieView('all')}>All</p>
-        <p onClick = {() => setMovieView('liked')}>Liked</p>
+        <p onClick = {() => setMovieView('all')}>Home</p>
+        <p onClick = {() => setMovieView('liked')}>Favorites</p>
         <p onClick = {() => setMovieView('watched')}>Watched</p>
       </nav>
 
