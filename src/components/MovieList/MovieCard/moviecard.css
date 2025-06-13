@@ -29,3 +29,19 @@
     cursor: pointer; /*Change cursor symbol so user nows they can click*/
 }
 
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  gap:50px;
+}
+
+.like-btn{
+  font-size: 30px;
+}
+
+.watched-btn{
+  font-size: 30px
+}
+
+

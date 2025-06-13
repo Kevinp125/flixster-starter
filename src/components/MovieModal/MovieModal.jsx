@@ -1,5 +1,9 @@
 import React from "react";
 import './modalstyles.css'
+import { getMovieVideos } from "../../utils";
+import YoutubeEmbed from "../YoutubeEmbed/YoutubeEmbed";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const baseURL = 'https://image.tmdb.org/t/p'; // 
 const posterSize = '/w500'
@@ -7,7 +11,12 @@ const posterSize = '/w500'
 
 export default function MovieModal({movieDetails, handleCardClose}){
 
-  const fullImagePath = baseURL + posterSize + movieDetails.poster_path; //this makes the image path cause data doesnt have full image path just the poster_path (imdb thing)
+  const [embedId, setEmbedId] = useState('');
+  const fullImagePath = baseURL + posterSize + movieDetails.backdrop_path; //this makes the image path cause data doesnt have full image path just the poster_path (imdb thing)
+
+  useEffect( () => {
+    getMovieVideos(movieDetails).then((movieTrailerKey) => {setEmbedId(movieTrailerKey)});
+  },[]);
 
   //helper function that returns the list of genres. Will be called in a p tag below
   function buildGenreString(){
@@ -33,7 +42,7 @@ export default function MovieModal({movieDetails, handleCardClose}){
           <p>Overview: {movieDetails.overview}</p>
           <p>Genres: {buildGenreString()}</p>
           <p>Runtime: {movieDetails.runtime} minutes</p>
-          
+          <YoutubeEmbed embedId = {embedId}/>         
 
         </div>
     </div>
