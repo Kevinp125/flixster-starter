@@ -30,3 +30,7 @@
   font-size: 20px;
   font-weight: bold;
 }
+
+.sidebar p:hover{
+  cursor: pointer;
+}
