@@ -129,7 +129,7 @@ const App = () => {
     
     const updatedList = movieList.map( (movie) => {
       if(movie.id === movieToModify.id){
-        if(movie.liked === null) movie.like = true;
+        if(movie.liked === null) movie.liked = true;
         else movie.liked = !movie.liked;
       }
       return movie;
