@@ -170,7 +170,7 @@ const App = () => {
         <MovieList handleCardClick = {handleCardClick} movieList = {movieList} movieView = {movieView} setMovieToLikedInMovieList = {setMovieToLikedInMovieList} setMovieToWatchedInMovieList = {setMovieToWatchedInMovieList}/>
       </section>
 
-      <button className = "load-more-btn" onClick = {handleLoadMoreClick}>Load More...</button>
+      <button className = {movieView === 'all'? "load-more-btn" : "load-more-btn-hidden"} onClick = {handleLoadMoreClick}>Load More...</button>
 
       <Footer />
 
