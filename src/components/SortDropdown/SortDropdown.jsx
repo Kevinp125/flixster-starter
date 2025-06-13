@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import './sortdropdown.css'
 
 
 export default function SortDropdown({handleSort}){
@@ -10,7 +11,7 @@ export default function SortDropdown({handleSort}){
   }
 
   return(
-    <select onChange = {whichSort} id ="sort-dropdown">
+    <select className = "sort-dropdown" onChange = {whichSort} id ="sort-dropdown">
       <option value = "default" >Sort By</option>
       <option value = "title" >Title (A-Z)</option>
       <option value = "release-date">Release Date (Recent to Oldest)</option>
