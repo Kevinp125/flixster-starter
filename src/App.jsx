@@ -153,16 +153,18 @@ const App = () => {
   }
 
   return (
+
     <div className="App">
       
-
-      <Header handleSearch = {handleSearch} handleClear={handleClear} handleSort = {handleSort}/>
-
       <nav className = "sidebar">
         <p onClick = {() => setMovieView('all')}>All</p>
         <p onClick = {() => setMovieView('liked')}>Liked</p>
         <p onClick = {() => setMovieView('watched')}>Watched</p>
       </nav>
+
+
+      <Header handleSearch = {handleSearch} handleClear={handleClear} handleSort = {handleSort}/>
+
 
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
         <MovieList handleCardClick = {handleCardClick} movieList = {movieList} movieView = {movieView} setMovieToLikedInMovieList = {setMovieToLikedInMovieList} setMovieToWatchedInMovieList = {setMovieToWatchedInMovieList}/>
@@ -175,6 +177,7 @@ const App = () => {
       {movieChosen && <MovieModal handleCardClose = {handleCardClose} movieDetails = {movieChosen}/>} {/*If movie chosen is no longer null (has movieDetails) first piece will be true so itll evalute second part of statement which is rendering movieModal */}
 
     </div>
+
   )
   
 }

@@ -12,8 +12,21 @@
   padding: 20px;
 }
 
-.sidebar{
+.app-container{
   display: flex;
+
+}
+
+.sidebar{
+  position: fixed;
+  top: 50%;
   flex-direction: column;
   color: white;
+
+}
+
+.sidebar p{
+  padding:10px;
+  font-size: 20px;
+  font-weight: bold;
 }
