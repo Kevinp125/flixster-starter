@@ -5,7 +5,7 @@ https://courses.codepath.org/courses/site/unit/2#!assignment
 
 Submitted by: **Kevin Pereda**
 
-Estimated time spent: **10:00** hours spent in total
+Estimated time spent: **14:00** hours spent in total
 
 Deployed Application (**required**): [Flixster Deployed Site](https://flixster-starter-n82r.onrender.com/)
 
