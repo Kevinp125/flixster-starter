@@ -1,10 +1,11 @@
-📝 `NOTE` Use this template to initialize the contents of a README.md file for your application. As you work on your assignment over the course of the week, update the required or stretch features lists to indicate which features you have completed by changing `[ ]` to `[x]`. (🚫 Remove this paragraph before submitting your assignment.)
+Below is link to project guidelines and milestones
+https://courses.codepath.org/courses/site/unit/2#!assignment
 
 ## Unit Assignment: Flixster
 
 Submitted by: **Kevin Pereda**
 
-Estimated time spent: **8:30** hours spent in total
+Estimated time spent: **10:00** hours spent in total
 
 Deployed Application (**required**): [Flixster Deployed Site](https://flixster-starter-n82r.onrender.com/)
 
