@@ -17,11 +17,12 @@ const App = () => {
   const pageNum = useRef(1);  //useRef here for pageNum is better since pageNum doesn't affect our dom and will get updated immidiately with useRef instead of state.
   const isSearching = useRef(false); //use a ref for the isSearching flag so it persists across renders and updates instantly
   const [movieChosen, setMovieChosen] = useState(null); //state will get updated with a specific movie once a card is clicked
+  const [movieView, setMovieView] = useState('all'); //state for the current page view
 
 
   //function updates the pageNum and calls the funtions that returns the appropriate movie page and appends it to array. If we are in search mode we call get Search results.
   function handleLoadMoreClick(){
-    
+
     pageNum.current++;
 
     if(isSearching.current){
@@ -123,13 +124,48 @@ const App = () => {
     setMovieChosen(null);
   }
 
+  //function gets called in the MovieCard whenever a movie is liked. This maps through our list and finds the movie that was liked and adds a liked field that can be toggled
+  function setMovieToLikedInMovieList(movieToModify){
+    
+    const updatedList = movieList.map( (movie) => {
+      if(movie.id === movieToModify.id){
+        if(movie.liked === null) movie.like = true;
+        else movie.liked = !movie.liked;
+      }
+      return movie;
+    })
+
+    setMovieList(updatedList);
+  }
+
+  //function gets called in the MovieCard whenever a movie is watched. This maps through our list and finds the movie that was watched and adds a watched field that can be toggled
+  function setMovieToWatchedInMovieList(movieToModify){
+    
+    const updatedList = movieList.map( (movie) => {
+      if(movie.id === movieToModify.id){
+        if(movie.watched === null) movie.watched = true;
+        else movie.watched = !movie.watched;
+      }
+      return movie;
+    })
+
+    setMovieList(updatedList);
+  }
+
   return (
     <div className="App">
       
+
       <Header handleSearch = {handleSearch} handleClear={handleClear} handleSort = {handleSort}/>
 
+      <nav className = "sidebar">
+        <p onClick = {() => setMovieView('all')}>All</p>
+        <p onClick = {() => setMovieView('liked')}>Liked</p>
+        <p onClick = {() => setMovieView('watched')}>Watched</p>
+      </nav>
+
       <section className = "movie-list-container"> {/*Creating a section that holds all the movieCard articles*/} 
-        <MovieList handleCardClick = {handleCardClick} movieList = {movieList}/>
+        <MovieList handleCardClick = {handleCardClick} movieList = {movieList} movieView = {movieView} setMovieToLikedInMovieList = {setMovieToLikedInMovieList} setMovieToWatchedInMovieList = {setMovieToWatchedInMovieList}/>
       </section>
 
       <button className = "load-more-btn" onClick = {handleLoadMoreClick}>Load More...</button>

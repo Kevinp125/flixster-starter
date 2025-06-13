@@ -11,3 +11,9 @@
   color: white;
   padding: 20px;
 }
+
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
