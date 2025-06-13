@@ -7,7 +7,7 @@ import {getMovieList, getSearchResults} from './utils.js'
 
 import MovieList from './components/MovieList/MovieList.jsx'
 import Header from './components/Header/Header.jsx'
-import Footer from './components/Header/Footer/Footer.jsx'
+import Footer from './components/Footer/Footer.jsx'
 import MovieModal from './components/MovieModal/MovieModal.jsx'
 
 const App = () => {

@@ -1,13 +1,15 @@
 
-const baseNowPlayingUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US'; //url that we are sending fetch request to that returns array with movies now playing and details without page at end
-const baseSearchUrl = 'https://api.themoviedb.org/3/search/movie'; //url that is the request that returns movie results depending on a query parameter which we are getting from our SearchBar component
-const baseDetailsUrl = 'https://api.themoviedb.org/3/movie/';
-const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
+const BASE_MOVIE_URL = 'https://api.themoviedb.org/3/'
+
+const BASE_NOW_PLAYING_URL = `${BASE_MOVIE_URL}movie/now_playing?language=en-US`; //url that we are sending fetch request to that returns array with movies now playing and details without page at end
+const BASE_SEARCH_URL = `${BASE_MOVIE_URL}search/movie`; //url that is the request that returns movie results depending on a query parameter which we are getting from our SearchBar component
+const BASE_DETAILS_URL = `${BASE_MOVIE_URL}movie/`;
+const BASE_MOVIE_VIDEOS_URL = `${BASE_MOVIE_URL}movie/`;
 
 //function makes fetch request to movie API depending on what page we need to load. If we are loading more pages past 1 we append what fetch request retrusn to our existing array
   export async function getMovieList(pageIdx){
     
-    const urlWithPage = `${baseNowPlayingUrl}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
+    const urlWithPage = `${BASE_NOW_PLAYING_URL}&page=${pageIdx}` //update url depending on the pageIdx that gets passed in which is being updated depending on userClick
   
 
     try{
@@ -39,7 +41,7 @@ const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
   //function actually calls api and that returns an array of movies that match the searchTerm
   export async function getSearchResults(searchTerm, pageIdx){
 
-    const urlWithQuery = `${baseSearchUrl}?query=${searchTerm}&include_adult=false&language=en-US&page=${pageIdx}`;
+    const urlWithQuery = `${BASE_SEARCH_URL}?query=${searchTerm}&include_adult=false&language=en-US&page=${pageIdx}`;
 
     try{
 
@@ -68,7 +70,7 @@ const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
 
   export async function getMovieDetails(movie){
 
-    const urlWithMovieID = baseDetailsUrl + movie.id + '?language=en-US';
+    const urlWithMovieID = BASE_DETAILS_URL + movie.id + '?language=en-US';
 
     try{
 
@@ -96,7 +98,7 @@ const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
   //function does a fetch request which returns all the videos pertaining to a certain movie
   export async function getMovieVideos(movie){
 
-    const videosUrlWithMovieID = `${baseMovieVideosUrl}${movie.id}/videos?language=en-US`
+    const videosUrlWithMovieID = `${BASE_MOVIE_VIDEOS_URL}${movie.id}/videos?language=en-US`
 
     try{  
 
@@ -124,8 +126,20 @@ const baseMovieVideosUrl = 'https://api.themoviedb.org/3/movie/';
   }
 
   //function uses find method to return first instance of video who has type Trailer
-  function getMovieTrailer(movieVideoList){
+  export function getMovieTrailer(movieVideoList){
 
     return movieVideoList.find((video) => video.type === 'Trailer');
 
   }
+
+
+  //helper function that returns the list of genres. Will be called in a p tag below
+  export function buildGenreString(movieDetails){
+
+    //iterate through genres array of objects and returns just the genre name for each and puts it in new array which we can after use the join method to join all genre names in array nicely separated by commas and space
+    const genreString = movieDetails.genres.map( (genre) => genre.name ).join(", ");
+
+    return genreString; //return the genreString
+  }
+
+  export function generate

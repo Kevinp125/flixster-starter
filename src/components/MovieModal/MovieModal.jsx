@@ -1,6 +1,6 @@
 import React from "react";
 import './modalstyles.css'
-import { getMovieVideos } from "../../utils";
+import { getMovieVideos, buildGenreString } from "../../utils";
 import YoutubeEmbed from "../YoutubeEmbed/YoutubeEmbed";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -18,15 +18,6 @@ export default function MovieModal({movieDetails, handleCardClose}){
     getMovieVideos(movieDetails).then((movieTrailerKey) => {setEmbedId(movieTrailerKey)});
   },[]);
 
-  //helper function that returns the list of genres. Will be called in a p tag below
-  function buildGenreString(){
-
-    //iterate through genres array of objects and returns just the genre name for each and puts it in new array which we can after use the join method to join all genre names in array nicely separated by commas and space
-    const genreString = movieDetails.genres.map( (genre) => genre.name ).join(", ");
-
-    return genreString; //return the genreString
-  }
-
   return(
   
     <div id = "modal" className="modal-overlay">
@@ -40,14 +31,12 @@ export default function MovieModal({movieDetails, handleCardClose}){
           <img className = "modal-img" src={fullImagePath} alt={`${movieDetails.title} movie poster`} />
           <p>Release Date: {movieDetails.release_date}</p>
           <p>Overview: {movieDetails.overview}</p>
-          <p>Genres: {buildGenreString()}</p>
+          <p>Genres: {buildGenreString(movieDetails)}</p>
           <p>Runtime: {movieDetails.runtime} minutes</p>
           <YoutubeEmbed embedId = {embedId}/>         
 
         </div>
     </div>
-
-
 
   )
 
