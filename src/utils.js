@@ -141,5 +141,3 @@ const BASE_MOVIE_VIDEOS_URL = `${BASE_MOVIE_URL}movie/`;
 
     return genreString; //return the genreString
   }
-
-  export function generate
